@@ -1,4 +1,5 @@
 import { Button, Heading, MultiStep, Text } from '@ignite-ui/react'
+import { signIn, useSession } from 'next-auth/react'
 
 import { ArrowRight } from 'phosphor-react'
 
@@ -6,6 +7,7 @@ import { Header, Container } from '../styles'
 import { ConnectBox, ConnectItem } from './styles'
 
 export default function Connet() {
+  const session = useSession()
   // async function handleRegister(data: RegisterFormData) {
 
   // }
@@ -25,11 +27,17 @@ export default function Connet() {
       <ConnectBox>
         <ConnectItem>
           <Text>Google Calendar</Text>
-          <Button variant="secondary" size="sm">
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => signIn('google')}
+          >
             Conectar
             <ArrowRight />
           </Button>
         </ConnectItem>
+
+        <Text>{JSON.stringify(session.data)}</Text>
 
         <Button type="submit">
           Próximo passo
