@@ -36,7 +36,7 @@ const timeIntervalsFormSchema = z.object({
     .length(7)
     .transform((intervals) => intervals.filter((interval) => interval.enabled))
     .refine((intervals) => intervals.length > 0, {
-      message: 'Você precisa selecionar pelo menos um dia da semana!',
+      message: 'Você precisa selecionar pelo menos um dia da semana',
     })
     .transform((intervals) => {
       return intervals.map((interval) => {
@@ -54,10 +54,9 @@ const timeIntervalsFormSchema = z.object({
             interval.endTimeInMinutes - 60 >= interval.startTimeInMinutes,
         )
       },
-
       {
         message:
-          'O horário de término deve ser pelo menos 1h distante do inicio.',
+          'O horário de término deve ser pelo menos 1h distante do início.',
       },
     ),
 })
@@ -96,7 +95,10 @@ export default function Connet() {
   const intervals = watch('intervals')
 
   async function handleSettimeIntervals(data: any) {
+    console.log('intervals', data)
     const { intervals } = data as TimeIntervalsFormOutput
+    console.log('intervals', intervals)
+
     await api.post('/users/time-intervals', intervals)
   }
 
